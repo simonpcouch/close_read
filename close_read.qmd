@@ -1,0 +1,225 @@
+---
+format: 
+  html:
+    theme:
+      - custom.scss
+    fontcolor: black
+    backgroundcolor: white
+    page-layout: full
+    self-contained: true
+    df-print: paged
+execute: 
+  echo: false
+---
+
+::::: {.columns .column-page}
+
+:::: {.column width=35%}
+
+# A Grammar of Graphics
+
+## A close read of a scatterplot
+
+[By Andrew Bray]{style="font-size: .7em"}
+
+:::{}
+\
+:::
+
+What a lovely graphic this is,
+
+with its three colors
+
+and dots all over the place.
+
+I wonder: how was this made? Let's walk through this step by step, starting with the data.
+
+::::
+
+:::: {.column width="10%"}
+::::
+
+:::: {.column width="55%" style="padding:20px; position:sticky;top:30vh;"}
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+
+library(ggplot2)
+library(palmerpenguins)
+library(dplyr)
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = flipper_length_mm,
+                     color = species)) +
+  geom_point() +
+  labs(x = "Bill Length",
+       y = "Flipper Length",
+       Species = "Species") +
+  theme_bw()
+```
+:::::
+:::::
+
+::::: {.columns .column-page}
+:::: {.column width="35%"}
+
+### The Data
+
+At the foundation of any data visualization is the data itself. Here our data come from Dr. Kristen Gorman, who recorded measurements on 344 penguins near Palmer Station, Antarctica. The three variables at hand are the length of the bill (a numerical variable), the length of the flipper (a numerical variable), and the species of the bird (a categorical variable).
+
+We can see that we have a bump in the road ahead! At least one of these rows has some missing values, as indicated by *NA*. [show highlight of NA row].
+
+
+\
+
+::::
+
+:::: {.column width="10%"}
+::::
+
+:::: {.column width="55%" style="padding:20px; position:sticky;top:20vh;"}
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+
+select(penguins, species, bill_length_mm, flipper_length_mm)
+```
+
+::::
+:::::
+
+::::: {.columns .column-page}
+:::: {.column width="35%"}
+
+### The Canvas
+
+You can lay down a blank sheet of paper by calling the `ggplot()` function in the `ggplot2` package in R. Right now, there's nothing to see here, just a blank canvas, waiting to be designed.
+
+\
+
+::::
+
+:::: {.column width="10%"}
+::::
+
+:::: {.column width="55%" style="padding:20px; position:sticky;top:20vh;"}
+
+```{r}
+#| echo: true
+#| eval: true
+#| warning: false
+
+ggplot()
+```
+
+::::
+:::::
+
+
+::::: {.columns .column-page}
+:::: {.column width="35%"}
+
+### Aesthetic mappings
+
+The first and most important decision in the design of a graphic is the *aesthetic mapping*. This is a dynamic link that ties the variability found in a column of your data frame to variability in an aesthetic attribute of the plot.
+
+For a colored scatter plot, we use the following aesthetic mappings:\
+- Map bill length to the x-axis\
+- Map flipper length to the y-axis\
+- Map the species to a color palette\
+
+This plot still looks quite bare. Where is the data?
+
+::::
+
+:::: {.column width="10%"}
+::::
+
+:::: {.column width="55%" style="padding:20px; position:sticky;top:10vh;"}
+
+```{r}
+#| echo: true
+#| eval: true
+#| warning: false
+
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = flipper_length_mm,
+                     color = species))
+```
+
+::::
+:::::
+
+::::: {.columns .column-page}
+:::: {.column width="35%"}
+
+### Geometry
+
+The plot comes alive once we've assigned a **geometry**. The geometry describes the manner in which the observations show up in the graphic. In the *point* geometry, every observation is represented by a single circle. Now that our observation are plotted according to their aesthetic mapping, our plot is almost complete.
+
+What's lacking is some polish. 
+
+::::
+
+:::: {.column width="10%"}
+::::
+
+:::: {.column width="55%" style="padding:20px; position:sticky;top:10vh;"}
+
+```{r}
+#| echo: true
+#| eval: true
+#| warning: false
+
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = flipper_length_mm,
+                     color = species)) +
+  geom_point()
+```
+
+::::
+:::::
+
+
+::::: {.columns .column-page}
+:::: {.column width="35%"}
+
+### Theme
+
+To polish up the look of our plot, we'll focus on two things. The most apparent is the *theme*, which encompasses several small design decisions: the color of the background, the number and color of guidelines, the font, etc. `ggplot2` defaults to a gray background but I prefer the more minimal look of the white background in the black-and-white theme.
+
+:::{}
+The last piece to fix up was those labels. By default, the column names will show up. Those are written so that R can understand them: they lack spaces or punctuation. Here I've rewritten the labels to be ones that can be better understood by a human.
+
+\
+
+::::
+
+:::: {.column width="10%"}
+::::
+
+:::: {.column width="55%" style="padding:20px; position:sticky;top:7vh;"}
+
+```{r}
+#| echo: true
+#| eval: true
+#| warning: false
+
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = flipper_length_mm,
+                     color = species)) +
+  geom_point() +
+  labs(x = "Bill Length",
+       y = "Flipper Length",
+       Species = "Species") +
+  theme_bw()
+```
+
+::::
+:::::
+
+
+# El Fin
